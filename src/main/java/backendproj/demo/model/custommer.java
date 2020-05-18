@@ -1,7 +1,5 @@
 package backendproj.demo.model;
 
-
-
 import com.sun.istack.internal.NotNull;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
@@ -9,7 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document()
-public class User {
+public class custommer {
     @Id
     private String id ;
     @NotNull
@@ -25,9 +23,9 @@ public class User {
     private String QuestSec;
     private String repsec;
 
-    public User() { }
+    public custommer() { }
 
-    public User(String nom, String prenom, String email,
+    public custommer(String nom, String prenom, String email,
                 String password, String numeroTel, Binary imagedp) {
         Nom = nom;
         this.prenom = prenom;
@@ -37,7 +35,7 @@ public class User {
         this.imagedp = imagedp;
     }
 
-    public User(String nom, String prenom, String email, String password) {
+    public custommer(String nom, String prenom, String email, String password) {
         Nom = nom;
         this.prenom = prenom;
         this.email = email;

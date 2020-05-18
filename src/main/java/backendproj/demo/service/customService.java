@@ -1,10 +1,12 @@
 package backendproj.demo.service;
 
-
-import backendproj.demo.dao.userRepo;
+import backendproj.demo.dao.custommrepo;
 import backendproj.demo.model.User;
+import backendproj.demo.model.custommer;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,24 +18,39 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class UserService {
+public class customService {
     @Autowired
-    private userRepo userRep;
+    private custommrepo custo;
 
-    public List<User> findAll(){
-        return userRep.findAll();
+
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
+
+    public List<custommer> findAll(){
+        return custo.findAll();
     }
-    public ArrayList<String> findIds(){
-        List<User> e =findAll();
+
+    public ArrayList<String> findAllEmail(){
+
+        List<custommer> e =findAll();
         ArrayList<String> a=new ArrayList<>();
-        for (User m:e) {
-        a.add(m.getId());
+        for(custommer l:e){
+            a.add(l.getEmail());
         }
         return a;
     }
 
-    public User createuser3( String email , String numeroTel, String QuestSec,String repSec) {
-        User o =findByMail(email);
+
+    public ArrayList<String> findIds(){
+        List<custommer> e =findAll();
+        ArrayList<String> a=new ArrayList<>();
+        for (custommer m:e) {
+            a.add(m.getId());
+        }
+        return a;
+    }
+
+    public custommer createuser3( String email , String numeroTel, String QuestSec,String repSec) {
+        custommer o =findByMail(email);
 
         o.setNumeroTel(numeroTel);
         o.setQuestSec(QuestSec);
@@ -42,17 +59,18 @@ public class UserService {
         return o;
     }
 
-    public User createuser2( String email ,MultipartFile  imagedp)throws IOException {
-        User o =findByMail(email);
+    public custommer createuser2(String email , MultipartFile imagedp)throws IOException {
+        custommer o =findByMail(email);
+        logger.debug("je suis la "+imagedp.toString());
         o.setImagedp(new Binary(BsonBinarySubType.BINARY, imagedp.getBytes()));
-       // o.setImagedp(imagedp);
+        // o.setImagedp(imagedp);
         updateuser(o);
         return o;
     }
 
-    public User createuser1(String nom, String prenom, String email,
-                           String password,Model model)throws IOException {
-        User user=new User(nom,prenom,email,password);
+    public custommer createuser1(String nom, String prenom, String email,
+                            String password, Model model)throws IOException {
+        custommer user=new custommer(nom,prenom,email,password);
        /* User r;
         int n;*/
         int o=0;
@@ -77,17 +95,17 @@ public class UserService {
 
 
         System.out.println(user.toString());
-        userRep.save(user);
+        custo.save(user);
         return user;
     }
 
 
-    public User createuser(String nom, String prenom, String email,
-                              String password, String numeroTel,MultipartFile  imagedp, Model model)throws IOException {
-        User user=new User(nom,prenom,email,password,numeroTel,new Binary(BsonBinarySubType.BINARY, imagedp.getBytes()));
+    public custommer createuser(String nom, String prenom, String email,
+                           String password, String numeroTel,MultipartFile  imagedp, Model model)throws IOException {
+        custommer user=new custommer(nom,prenom,email,password,numeroTel,new Binary(BsonBinarySubType.BINARY, imagedp.getBytes()));
        /* User r;
         int n;*/
-       int o=0;
+        int o=0;
         {
             /*int nb = (int) Math.random()*1000;
             r = findById(String.valueOf(nb));
@@ -105,32 +123,32 @@ public class UserService {
                 user.setId(String.valueOf(p));
             }
         }while(o==1);
-       // user.setId();
+        // user.setId();
 
 
         System.out.println(user.toString());
-        userRep.save(user);
+        custo.save(user);
         return user;
     }
 
-    public User findById(String id){
-        return userRep.findById(id).get();
+    public custommer findById(String id){
+        return custo.findById(id).get();
     }
 
     public void deleteById(String id){
-        userRep.deleteById(id);
+        custo.deleteById(id);
     }
 
     public void deleteAllUser(){
-        userRep.deleteAll();
+        custo.deleteAll();
     }
 
-    public void updateuser(User cl){
-        userRep.save(cl);
+    public void updateuser(custommer cl){
+       custo.save(cl);
     }
 
-    public User findByMail(String mail){
-        for(User im:userRep.findAll()){
+    public custommer findByMail(String mail){
+        for(custommer im:custo.findAll()){
             if(im.getEmail().equals(mail)){
                 return im;
             }
@@ -139,14 +157,14 @@ public class UserService {
     }
 
     public void deleteByMail(String mail){
-        User op=findByMail(mail);
-        userRep.delete(op);
+        custommer op=findByMail(mail);
+        custo.delete(op);
     }
 
 
 
-    public User Login(String mail,String pwd){
-        User log=findByMail(mail);
+    public custommer Login(String mail,String pwd){
+        custommer log=findByMail(mail);
         if(mail.isEmpty() || pwd.isEmpty() || pwd.equals("") || mail.equals("") || log==null){
             return null;
         }

@@ -21,13 +21,12 @@ public class Maison {
     private String longiture;
     private String prix_serv;
     private Binary imagedp;
-    private InputStream stream;
 
     public Maison() {
     }
 
     public Maison(String nom_mais, String nom_prop,  String type_serv,String adress, String attitude,
-                  String longiture, String prix_serv,Binary imagedp, InputStream stream) {
+                  String longiture, String prix_serv,Binary imagedp) {
         this.nom_mais = nom_mais;
         this.nom_prop = nom_prop;
         this.type_serv = type_serv;
@@ -36,7 +35,6 @@ public class Maison {
         this.longiture = longiture;
         this.prix_serv = prix_serv;
         this.imagedp = imagedp;
-        this.stream = stream;
     }
 
     public String getId() {
@@ -119,11 +117,4 @@ public class Maison {
         this.imagedp = imagedp;
     }
 
-    public InputStream getStream() {
-        return stream;
-    }
-
-    public void setStream(InputStream stream) {
-        this.stream = stream;
-    }
 }

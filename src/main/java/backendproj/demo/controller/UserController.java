@@ -54,6 +54,30 @@ public class UserController {
 
     }
 
+    @PostMapping("/signup1")
+    public User creuser1(@RequestParam("nom") String nom, @RequestParam("prenom")  String pnom,
+                        @RequestParam("email") String email,@RequestParam("pwd") String password,
+                        Model model) throws IOException {
+
+        return  a.createuser1(nom,pnom,email,password,model);
+
+    }
+    @PostMapping("/signup2")
+    public User creuser2(
+                        @RequestParam("email") String email, @RequestParam("img") MultipartFile imagedp,
+                        Model model) throws IOException {
+
+        return  a.createuser2(email,imagedp);
+
+    }
+    @PostMapping("/signup3")
+    public User creuser3(@RequestParam("num") String num, @RequestParam("sqtsec")  String sqtsec,
+                        @RequestParam("email") String email,@RequestParam("repsec") String repsec
+                        ) throws IOException {
+
+        return  a.createuser3(num,sqtsec,email,repsec);
+
+    }
 
 
     @DeleteMapping("/delete/{mail}")
