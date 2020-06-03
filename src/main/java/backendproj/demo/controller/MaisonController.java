@@ -34,7 +34,12 @@ public class MaisonController {
         System.out.println("------> : listMaison");
         logger.debug("getting maisons");
         return maisonService.findAllM();
-}/*
+    }
+
+
+
+
+/*
     @PostMapping("/add")
     public String cremaison(@RequestParam("nom_mais") String nom, @RequestParam("nom_prop")  String pnom,
                         @RequestParam("type_serv") String type_serv, @RequestParam("adress") String adress,
@@ -59,14 +64,17 @@ public class MaisonController {
 
     }
     @GetMapping(value="/listmbyserv/{typeserv}")
-    public Maison getBySERvice(@PathVariable String typeserv) {
+    public String getBySERvice(@PathVariable String typeserv) {
         return maisonService.findByTypeServ(typeserv);
     }
 
-        @GetMapping(value="/listm/{nom_mais}")
-    public Maison getUser(@PathVariable String nom_mais){
+          @GetMapping(value="/listm/{nom_mais}")
+        public String getUser(@PathVariable String nom_mais){
+            return  maisonService.findByNom_maisForSend(nom_mais);}
+  /*  public Maison getUser(@PathVariable String nom_mais){
         return  maisonService.findByNom_mais(nom_mais);
-    }
+    }*/
+
 
 
     @DeleteMapping("/delete/{nom_mais}")

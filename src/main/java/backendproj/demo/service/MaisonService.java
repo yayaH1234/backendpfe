@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
@@ -86,6 +88,9 @@ public class MaisonService {
         return a;
     }
 
+
+
+
     public Maison findByNom_mais(String nom_mais){
         for(Maison im:maisonRepo.findAll()){
             if(im.getNom_mais().equals(nom_mais)){
@@ -94,10 +99,31 @@ public class MaisonService {
         }
         return null;
     }
-    public Maison findByTypeServ(String type_serv){
+
+    public String findByNom_maisForSend(String nom_mais){
+        ArrayList<String> infmais=new ArrayList<>();
+        for(Maison im:maisonRepo.findAll()){
+            if(im.getNom_mais().equals(nom_mais)){
+                infmais.add(im.getNom_mais());
+                infmais.add(im.getNom_prop());
+                //infmais.add(im.getImagedp().toString());
+                infmais.add(Base64.getUrlEncoder().encodeToString(im.getImagedp().getData()));
+                infmais.add(im.getNom_loc());
+                infmais.add(im.getPrix_serv());
+                infmais.add(im.getAdress());
+            }
+        }
+        return infmais.toString();
+    }
+
+    public String findByTypeServ(String type_serv){
+        ArrayList<String> msS=new ArrayList<>();
         for(Maison im:maisonRepo.findAll()){
             if(im.getType_serv().equals(type_serv)){
-                return im;
+                msS.add(im.getNom_mais());
+                msS.add(im.getAttitude());
+                msS.add(im.getLongiture());
+                return msS.toString();
             }
         }
         return null;

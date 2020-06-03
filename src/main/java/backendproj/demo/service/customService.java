@@ -1,6 +1,8 @@
 package backendproj.demo.service;
 
 import backendproj.demo.dao.custommrepo;
+import backendproj.demo.dao.maisonRepos;
+import backendproj.demo.model.Maison;
 import backendproj.demo.model.User;
 import backendproj.demo.model.custommer;
 import org.bson.BsonBinarySubType;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
@@ -22,12 +25,48 @@ public class customService {
     @Autowired
     private custommrepo custo;
 
+    @Autowired
+    private maisonRepos msRepo;
+
 
     private final Logger logger= LoggerFactory.getLogger(this.getClass());
 
     public List<custommer> findAll(){
         return custo.findAll();
     }
+
+    public String infoProfil(String email){
+        ArrayList<String> ar=new ArrayList<>();
+        custommer co=findByMail(email);
+        //  offre dans l'app
+        List<Maison> Lm=msRepo.findAll();
+        int l=Lm.size();
+        ar.add(String.valueOf(l));
+
+        //  publication poster
+        int i=0;
+        for(Maison m:Lm){
+            if(m.getNom_prop().equals(co.getNom()+" "+co.getPrenom())){
+                i++;
+            }
+        }
+        ar.add(String.valueOf(i));
+
+        //  publier image
+
+        ar.add(co.getImagedp().toString());
+
+        //  publier email , numero
+
+        ar.add(co.getEmail());
+        ar.add(co.getNumeroTel());
+
+        ar.add(co.getNom()+" "+co.getPrenom());
+        ar.add(co.getPassword());
+
+        return ar.toString();
+    }
+
 
     public ArrayList<String> findAllEmail(){
 
@@ -49,18 +88,19 @@ public class customService {
         return a;
     }
 
-    public custommer createuser3( String email , String numeroTel, String QuestSec,String repSec) {
+    public custommer createuser3( String email , String QuestSec,String repSec) {
         custommer o =findByMail(email);
 
-        o.setNumeroTel(numeroTel);
+        logger.debug("--------------------------------------------- > je suis la "+QuestSec+repSec);
         o.setQuestSec(QuestSec);
         o.setRepsec(repSec);
         updateuser(o);
         return o;
     }
 
-    public custommer createuser2(String email , MultipartFile imagedp)throws IOException {
+    public custommer createuser2(String numeroTel,String email , MultipartFile imagedp)throws IOException {
         custommer o =findByMail(email);
+        o.setNumeroTel(numeroTel);
         logger.debug("je suis la "+imagedp.toString());
         o.setImagedp(new Binary(BsonBinarySubType.BINARY, imagedp.getBytes()));
         // o.setImagedp(imagedp);
@@ -172,5 +212,41 @@ public class customService {
             return log;
         }
         return null;
+    }
+    public String forgottPass(String email,String repSec){
+        String pass=null;
+        custommer cos=findByMail(email);
+        if(repSec.equals(cos.getRepsec())){
+            pass=cos.getPassword();
+        }
+        if(pass.equals(null)){
+            pass="Error";
+        }
+        return pass;
+    }
+
+    public String achatMs(String emil,String nmMais){
+        custommer cst=findByMail(emil);
+        Maison ms=null;
+     for(Maison m:msRepo.findAll()){
+         if(nmMais.equals(m.getNom_mais())){
+             ms=m;
+             ms.setNom_loc(cst.getNom()+" "+cst.getPrenom());
+             msRepo.save(ms);
+             break;
+         }
+         if(ms.equals(null)){
+             return "Error";
+         }
+     }
+        return "succes";
+    }
+    public String forDrawer(String email){
+        custommer cstp=findByMail(email);
+        ArrayList<String> ar=new ArrayList<String>();
+        ar.add(cstp.getNom());
+        ar.add(cstp.getEmail());
+        ar.add(Base64.getUrlEncoder().encodeToString(cstp.getImagedp().getData()));
+        return cstp.toString();
     }
 }

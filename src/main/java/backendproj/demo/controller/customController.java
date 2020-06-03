@@ -42,12 +42,55 @@ public class customController {
         logger.debug("getting usres");
         return a.findAllEmail();
     }
+    @GetMapping(value="/getPassword")
+    public String getpasswod(@RequestParam("email") String eml, @RequestParam("repSec") String repSec)
+    {
+        System.out.println("------> : getting password");
+        logger.debug("getting password");
+        return a.forgottPass(eml,repSec);
+    }
+
+
+    @GetMapping(value="/achat/{mail}")
+    public String achetOrReserv(@PathVariable String mail)
+    {
+        System.out.println("------> : getting infotmation reserve");
+        logger.debug("getting infotmation reserve");
+        String[] dev=mail.split("__");
+        String eml=dev[0];
+        String nmms=dev[1];
+        return a.achatMs(eml,nmms);
+    }
+    @GetMapping(value="/getdraw/{mail}")
+    public String getdraw(@PathVariable String mail)
+    {
+        System.out.println("------> : getting draw");
+        logger.debug("getting draw");
+        return a.forDrawer(mail);
+    }
+
+    @GetMapping(value="/getPassword2/{mail}")
+    public String getpasswod2(@PathVariable String mail)
+    {
+        System.out.println("------> : getting password");
+        logger.debug("getting password");
+        String[] dev=mail.split("__");
+        String eml=dev[0];
+        String repSec=dev[1];
+        return a.forgottPass(eml,repSec);
+    }
 
 
     @GetMapping(value="/listuser/{mail}")
     public custommer getUser(@PathVariable String mail){
         return  a.findByMail(mail);
     }
+
+    @GetMapping(value="/userpro/{mail}")
+    public String getUserinfo(@PathVariable String mail){
+        return  a.infoProfil(mail);
+    }
+
     @GetMapping(value="/listuser/authontif")
     public custommer login(@RequestParam("login") String lg, @RequestParam("pwd") String pd){
         return  a.Login(lg,pd);
@@ -74,17 +117,17 @@ public class customController {
     @PostMapping("/signup2")
     public custommer creuser2(
             @RequestParam("email") String email, @RequestParam("img") MultipartFile imagedp,
-            Model model) throws IOException {
+            @RequestParam("num") String num,Model model) throws IOException {
         logger.debug("inserting2");
-        return  a.createuser2(email,imagedp);
+        return  a.createuser2(num,email,imagedp);
 
     }
     @PostMapping("/signup3")
-    public custommer creuser3(@RequestParam("num") String num, @RequestParam("sqtsec")  String sqtsec,
+    public custommer creuser3( @RequestParam("sqtsec")  String sqtsec,
                          @RequestParam("email") String email,@RequestParam("repsec") String repsec
     ) throws IOException {
 
-        return  a.createuser3(num,sqtsec,email,repsec);
+        return  a.createuser3(sqtsec,email,repsec);
 
     }
 

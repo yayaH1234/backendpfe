@@ -46,13 +46,14 @@ public class custommer {
         return QuestSec;
     }
 
+    public String getRepsec() {
+        return repsec;
+    }
+
     public void setQuestSec(String questSec) {
         QuestSec = questSec;
     }
 
-    public String getRepsec() {
-        return repsec;
-    }
 
     public void setRepsec(String repsec) {
         this.repsec = repsec;
