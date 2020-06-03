@@ -54,7 +54,8 @@ public class customService {
 
         //  publier image
 
-        ar.add(co.getImagedp().toString());
+        //ar.add(co.getImagedp().toString());
+        ar.add(Base64.getUrlEncoder().encodeToString(co.getImagedp().getData()));
 
         //  publier email , numero
 
