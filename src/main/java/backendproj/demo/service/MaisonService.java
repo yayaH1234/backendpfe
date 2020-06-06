@@ -1,8 +1,10 @@
 package backendproj.demo.service;
 
+import backendproj.demo.dao.custommrepo;
 import backendproj.demo.dao.maisonRepos;
 import backendproj.demo.model.Maison;
 import backendproj.demo.model.User;
+import backendproj.demo.model.custommer;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -31,6 +33,10 @@ import java.util.Random;
 public class MaisonService {
     @Autowired
     private maisonRepos maisonRepo;
+
+    @Autowired
+    private custommrepo custo;
+
   /*  @Autowired
     private GridFsTemplate gridFsTemplate;
 
@@ -129,10 +135,45 @@ public class MaisonService {
         return null;
     }
 
+    public custommer findByMail(String mail){
+        for(custommer im:custo.findAll()){
+            if(im.getEmail().equals(mail)){
+                return im;
+            }
+        }
+        return null;
+    }
 
-    public void deleteByNom_mais(String nom_mais){
-        Maison op=findByNom_mais(nom_mais);
-        maisonRepo.delete(op);
+    public void deleteByNom_mais(String idOrNm,String mail){
+        Maison op=null;
+        op=findByNom_mais(idOrNm);
+
+        System.out.println("------> : Service maisonfor log      "+op);
+        custommer nmUs=findByMail(mail);
+        System.out.println("------> : Service maisonfor log      "+nmUs);
+        if(op!=null) {
+            if (op != null) {
+
+                System.out.println("affter if ");
+                if (op.getNom_prop().equals(nmUs.getNom())) {
+
+                    System.out.println("delliting");
+                    maisonRepo.delete(op);
+
+                }
+            }
+        }else{
+        op=maisonRepo.findById(idOrNm).get();
+            System.out.println("------> : Service maisonfor log      "+op);
+        if(op!=null){
+
+            System.out.println("after if");
+            if(op.getNom_prop().equals(nmUs.getNom())){
+                System.out.println("deleting");
+                maisonRepo.delete(op);
+            }
+        }}
+
     }
 
 

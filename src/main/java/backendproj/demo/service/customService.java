@@ -51,7 +51,7 @@ public class customService {
             }
         }
         ar.add(String.valueOf(i));
-
+/*
         //  publier image
 
         //ar.add(co.getImagedp().toString());
@@ -64,7 +64,7 @@ public class customService {
 
         ar.add(co.getNom()+" "+co.getPrenom());
         ar.add(co.getPassword());
-
+*/
         return ar.toString();
     }
 
@@ -204,13 +204,13 @@ public class customService {
 
 
 
-    public custommer Login(String mail,String pwd){
+    public String Login(String mail,String pwd){
         custommer log=findByMail(mail);
         if(mail.isEmpty() || pwd.isEmpty() || pwd.equals("") || mail.equals("") || log==null){
             return null;
         }
         if(log.getPassword().equals(pwd)){
-            return log;
+            return "succes";
         }
         return null;
     }
@@ -228,19 +228,23 @@ public class customService {
 
     public String achatMs(String emil,String nmMais){
         custommer cst=findByMail(emil);
+        System.out.println("-------------> user information "+cst.toString());
         Maison ms=null;
      for(Maison m:msRepo.findAll()){
+         System.out.println("-------------> after if "+m.toString());
          if(nmMais.equals(m.getNom_mais())){
+             logger.debug("-------------> in service avant "+m.toString());
+             System.out.println("-------------> in service avant "+m.toString());
              ms=m;
+             logger.debug("-------------> in service apres "+ms.toString());
+             System.out.println("-------------> in service apres "+ms.toString());
              ms.setNom_loc(cst.getNom()+" "+cst.getPrenom());
              msRepo.save(ms);
-             break;
+             return "succes";
          }
-         if(ms.equals(null)){
-             return "Error";
-         }
-     }
-        return "succes";
+     }    return "Error";
+
+
     }
     public String forDrawer(String email){
         custommer cstp=findByMail(email);

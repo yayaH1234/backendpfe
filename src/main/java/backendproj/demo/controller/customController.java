@@ -59,6 +59,10 @@ public class customController {
         String[] dev=mail.split("__");
         String eml=dev[0];
         String nmms=dev[1];
+        System.out.println("value eml "+eml);
+        System.out.println("value nmms "+nmms);
+        logger.debug("value eml "+eml);
+        logger.debug("value nmms "+nmms);
         return a.achatMs(eml,nmms);
     }
     @GetMapping(value="/getdraw/{mail}")
@@ -80,7 +84,6 @@ public class customController {
         return a.forgottPass(eml,repSec);
     }
 
-
     @GetMapping(value="/listuser/{mail}")
     public custommer getUser(@PathVariable String mail){
         return  a.findByMail(mail);
@@ -91,8 +94,13 @@ public class customController {
         return  a.infoProfil(mail);
     }
 
-    @GetMapping(value="/listuser/authontif")
-    public custommer login(@RequestParam("login") String lg, @RequestParam("pwd") String pd){
+    @GetMapping(value="/listuser/authontif/{mail_pass}")
+    public String login(@PathVariable String mail_pass){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        String[] dev=mail_pass.split("__");
+        String lg=dev[0];
+        String pd=dev[1];
         return  a.Login(lg,pd);
     }
 

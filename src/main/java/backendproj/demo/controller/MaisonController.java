@@ -61,12 +61,13 @@ public class MaisonController {
         System.out.println("------> : addMaison");
         logger.debug("adding maisons");
         return  maisonService.CreateMs(nom,pnom,type_serv,adress,attitude,longiture,prix_serv,imagedp);
-
     }
     @GetMapping(value="/listmbyserv/{typeserv}")
     public String getBySERvice(@PathVariable String typeserv) {
         return maisonService.findByTypeServ(typeserv);
     }
+
+
 
           @GetMapping(value="/listm/{nom_mais}")
         public String getUser(@PathVariable String nom_mais){
@@ -74,14 +75,22 @@ public class MaisonController {
   /*  public Maison getUser(@PathVariable String nom_mais){
         return  maisonService.findByNom_mais(nom_mais);
     }*/
+  @GetMapping(value="/listmaisJSON/{nom_mais}")
+  public Maison getmaisonJSON(@PathVariable String nom_mais){
+      return  maisonService.findByNom_mais(nom_mais);}
 
 
 
-    @DeleteMapping("/delete/{nom_mais}")
-    public void deleteUser(@PathVariable String nom_mais){
-        maisonService.deleteByNom_mais(nom_mais);
+
+    @GetMapping("/delete/{nom_mais}")
+    public void deleteMs(@PathVariable String nom_mais){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        String[] dev=nom_mais.split("___");
+        String idOrNm=dev[0];
+        String mail=dev[1];
+        System.out.println("------> : information delete in controller"+idOrNm+" "+mail);
+        maisonService.deleteByNom_mais(idOrNm,mail);
     }
-
-
 
 }
