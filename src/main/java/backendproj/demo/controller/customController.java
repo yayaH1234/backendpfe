@@ -1,5 +1,6 @@
 package backendproj.demo.controller;
 
+import backendproj.demo.model.Maison;
 import backendproj.demo.model.User;
 import backendproj.demo.model.custommer;
 import backendproj.demo.service.customService;
@@ -143,6 +144,60 @@ public class customController {
     @DeleteMapping("/delete/{mail}")
     public void deleteUser(@PathVariable String mail){
         a.deleteByMail(mail);
+    }
+
+    @GetMapping(value="/verifieMs/{mail__nomMs}")
+    public String verifie(@PathVariable String mail__nomMs){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        String[] dev=mail__nomMs.split("__");
+        String lg=dev[0];
+        String pd=dev[1];
+        return  a.sheckProp(lg,pd);
+    }
+    @PostMapping(value="/modiff1")
+    public Maison updateMs1(@RequestParam("eml") String eml, @RequestParam("nom_mais") String nomMS, @RequestParam("nom_prop")  String nomProp,
+                            @RequestParam("type_serv") String type, @RequestParam("adress") String adrss,
+                            @RequestParam("prix_serv") String price) {
+        System.out.println("------> : getting mail mmodiff1");
+        logger.debug("getting mail mmodiff1");
+
+        return  a.updateMs1(eml,nomMS,nomProp,type,adrss,price);
+    }
+    @PostMapping(value="/modiff2")
+    public Maison updateMs2(@RequestParam("eml") String eml,@RequestParam("nom_mais") String nomMS,
+                            @RequestParam("attitude") String lat, @RequestParam("longiture") String lan){
+        System.out.println("------> : getting mail mmodiff2");
+        logger.debug("getting mail mmodiff2");
+
+        return  a.updateMs2(eml,nomMS,lat,lan);
+    }
+    @PostMapping(value="/modiff3")
+    public Maison updateMs3(@RequestParam("eml") String eml, @RequestParam("nom_mais") String nomMS, @RequestParam("nom_prop")  String nomProp,
+                            @RequestParam("type_serv") String type, @RequestParam("adress") String adrss,
+                            @RequestParam("attitude") String attitude, @RequestParam("longiture") String longiture,
+                            @RequestParam("prix_serv") String price,@RequestParam("imagedp") MultipartFile imagedp,
+                            Model model) throws IOException {
+        System.out.println("------> : getting mail mmodiff3");
+        logger.debug("getting mail mmodiff3");
+
+        return  a.updateMs3(eml,nomMS,imagedp);
+    }
+    @GetMapping(value="/modiff1/{mail_nomMs}")
+    public String getforup1(@PathVariable String mail_nomMs){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        String[] dev=mail_nomMs.split("__");
+        String lg=dev[0];
+        String pd=dev[1];
+        return  a.getMs1(lg,pd);
+    }
+    @GetMapping(value="/modiff2/{mail_nomMs}")
+    public String getforup2(@PathVariable String mail_nomMs){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        String[] dev=mail_nomMs.split("__");
+        return  a.getMs2(mail_nomMs);
     }
 
 }

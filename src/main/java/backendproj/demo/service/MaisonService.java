@@ -129,10 +129,10 @@ public class MaisonService {
                 msS.add(im.getNom_mais());
                 msS.add(im.getAttitude());
                 msS.add(im.getLongiture());
-                return msS.toString();
+                //return msS.toString();
             }
         }
-        return null;
+        return msS.toString();
     }
 
     public custommer findByMail(String mail){
@@ -148,8 +148,7 @@ public class MaisonService {
         Maison op=null;
         op=findByNom_mais(idOrNm);
 
-        System.out.println("------> : Service maisonfor log      "+op);
-        custommer nmUs=findByMail(mail);
+        System.out.println("------> : Service maisonfor log      "+op);custommer nmUs=findByMail(mail);
         System.out.println("------> : Service maisonfor log      "+nmUs);
         if(op!=null) {
             if (op != null) {

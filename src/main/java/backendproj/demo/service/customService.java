@@ -238,7 +238,7 @@ public class customService {
              ms=m;
              logger.debug("-------------> in service apres "+ms.toString());
              System.out.println("-------------> in service apres "+ms.toString());
-             ms.setNom_loc(cst.getNom()+" "+cst.getPrenom());
+             ms.setNom_loc(cst.getNom());
              msRepo.save(ms);
              return "succes";
          }
@@ -254,4 +254,76 @@ public class customService {
         ar.add(Base64.getUrlEncoder().encodeToString(cstp.getImagedp().getData()));
         return cstp.toString();
     }
+    public Maison findByNomMs(String nomMs){
+        Maison mson=null;
+        for(Maison o:msRepo.findAll()){
+            if(o.getNom_mais().equals(nomMs)){
+                mson=o;
+            }
+        }
+        return mson;
+    }
+    public String sheckProp(String email,String nomMs){
+        Maison ms=findByNomMs(nomMs);
+        custommer cstm=findByMail(email);
+        if(ms.getNom_prop().equals(cstm.getNom())){
+            return  "true";
+        }else
+    return "false";
+    }
+    public Maison updateMs1(String email,String nom_MS,String nomProp,String type,String adrss,String price){
+        String rp=sheckProp(email,nom_MS);
+        if(rp.equals("true")){
+            Maison msMod=findByNomMs(nom_MS);
+            msMod.setPrix_serv(price);
+            msMod.setAdress(adrss);
+            msMod.setNom_prop(nomProp);
+            msMod.setType_serv(type);
+            msRepo.save(msMod);
+            return msMod;
+        }
+        return null;
+    }
+    public String getMs1(String email,String nom_MS){
+        Maison ms1=findByNomMs(nom_MS);
+        ArrayList<String>  rp=new ArrayList<>();
+        rp.add(ms1.getNom_mais());
+        rp.add(ms1.getNom_prop());
+        rp.add(ms1.getType_serv());
+        rp.add(ms1.getAdress());
+        rp.add(ms1.getPrix_serv());
+    return rp.toString();
+    }
+    public Maison updateMs2(String email,String nom_MS,String lat,String lan){
+        String rp=sheckProp(email,nom_MS);
+        logger.debug("getting mail mmodiff2 "+rp);
+        System.out.println("------> : getting mail mmodiff2 "+rp);
+        if(rp.equals("true")){
+            Maison msMod=findByNomMs(nom_MS);
+            logger.debug("IN service updateMs2 "+msMod);
+            System.out.println("------> : getting mail mmodiff2 "+msMod);
+            msMod.setAttitude(lat);
+            msMod.setLongiture(lan);
+            msRepo.save(msMod);
+            return msMod;
+        }
+        return null;
+    }
+    public String getMs2(String nom_MS){
+        Maison ms1=findByNomMs(nom_MS);
+        ArrayList<String>  rp=new ArrayList<>();
+        rp.add(ms1.getAttitude());
+        rp.add(ms1.getLongiture());
+        return rp.toString();
+    }
+    public Maison updateMs3(String email,String nom_MS, MultipartFile imagedp)throws IOException{
+   /*     String rp=sheckProp(email,nom_MS);
+        if(rp.equals("true")){
+     */       Maison msMod=findByNomMs(nom_MS);
+            msMod.setImagedp(new Binary(BsonBinarySubType.BINARY, imagedp.getBytes()));
+            msRepo.save(msMod);
+            return msMod;
+   /*     }
+        return null;
+    */}
 }
