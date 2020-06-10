@@ -284,7 +284,7 @@ public class customService {
         }
         return null;
     }
-    public String getMs1(String email,String nom_MS){
+    public String getMs1(String nom_MS){
         Maison ms1=findByNomMs(nom_MS);
         ArrayList<String>  rp=new ArrayList<>();
         rp.add(ms1.getNom_mais());

@@ -173,31 +173,26 @@ public class customController {
         return  a.updateMs2(eml,nomMS,lat,lan);
     }
     @PostMapping(value="/modiff3")
-    public Maison updateMs3(@RequestParam("eml") String eml, @RequestParam("nom_mais") String nomMS, @RequestParam("nom_prop")  String nomProp,
-                            @RequestParam("type_serv") String type, @RequestParam("adress") String adrss,
-                            @RequestParam("attitude") String attitude, @RequestParam("longiture") String longiture,
-                            @RequestParam("prix_serv") String price,@RequestParam("imagedp") MultipartFile imagedp,
+    public Maison updateMs3(@RequestParam("eml") String eml, @RequestParam("nom_mais") String nomMS
+                            ,@RequestParam("imagedp") MultipartFile imagedp,
                             Model model) throws IOException {
         System.out.println("------> : getting mail mmodiff3");
         logger.debug("getting mail mmodiff3");
 
         return  a.updateMs3(eml,nomMS,imagedp);
     }
-    @GetMapping(value="/modiff1/{mail_nomMs}")
-    public String getforup1(@PathVariable String mail_nomMs){
-        System.out.println("------> : getting mail for log");
+    @GetMapping(value="/modiff1/get/{nomMs}")
+    public String getforup1(@PathVariable String nomMs){
+        System.out.println("------> : getting mail for GET UP&1");
         logger.debug("getting mail for log");
-        String[] dev=mail_nomMs.split("__");
-        String lg=dev[0];
-        String pd=dev[1];
-        return  a.getMs1(lg,pd);
+
+        return  a.getMs1(nomMs);
     }
-    @GetMapping(value="/modiff2/{mail_nomMs}")
-    public String getforup2(@PathVariable String mail_nomMs){
-        System.out.println("------> : getting mail for log");
+    @GetMapping(value="/modiff2/get/{nomMs}")
+    public String getforup2(@PathVariable String nomMs){
+        System.out.println("------> : getting mail for GET UP&2");
         logger.debug("getting mail for log");
-        String[] dev=mail_nomMs.split("__");
-        return  a.getMs2(mail_nomMs);
+        return  a.getMs2(nomMs);
     }
 
 }
