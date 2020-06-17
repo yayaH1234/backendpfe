@@ -136,7 +136,7 @@ public class customController {
                          @RequestParam("email") String email,@RequestParam("repsec") String repsec
     ) throws IOException {
 
-        return  a.createuser3(sqtsec,email,repsec);
+        return  a.createuser3(email,sqtsec,repsec);
 
     }
 
@@ -195,4 +195,10 @@ public class customController {
         return  a.getMs2(nomMs);
     }
 
+    @DeleteMapping(value="/delleteUsers")
+    public void dellete(){
+        System.out.println("------> : getting mail for GET UP&2");
+        logger.debug("getting mail for log");
+        a.deleteAllUser();
+    }
 }

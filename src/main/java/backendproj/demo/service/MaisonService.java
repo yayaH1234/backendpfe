@@ -42,6 +42,7 @@ public class MaisonService {
 
     @Autowired
     private GridFsOperations operations;*/
+  public void delAllMais(){maisonRepo.deleteAll();}
 
     public List<Maison> findAllM(){
         return maisonRepo.findAll();
@@ -148,10 +149,11 @@ public class MaisonService {
         Maison op=null;
         op=findByNom_mais(idOrNm);
 
-        System.out.println("------> : Service maisonfor log      "+op);custommer nmUs=findByMail(mail);
-        System.out.println("------> : Service maisonfor log      "+nmUs);
+        System.out.println("------> : Service maisonfor log      "+op);
+        custommer nmUs=findByMail(mail);
+        System.out.println("------> : Custommer maisonfor log      "+nmUs);
         if(op!=null) {
-            if (op != null) {
+
 
                 System.out.println("affter if ");
                 if (op.getNom_prop().equals(nmUs.getNom())) {
@@ -160,7 +162,7 @@ public class MaisonService {
                     maisonRepo.delete(op);
 
                 }
-            }
+
         }else{
         op=maisonRepo.findById(idOrNm).get();
             System.out.println("------> : Service maisonfor log      "+op);

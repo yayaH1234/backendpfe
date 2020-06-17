@@ -46,7 +46,7 @@ public class customService {
         //  publication poster
         int i=0;
         for(Maison m:Lm){
-            if(m.getNom_prop().equals(co.getNom()+" "+co.getPrenom())){
+            if(m.getNom_prop().equals(co.getNom())){
                 i++;
             }
         }

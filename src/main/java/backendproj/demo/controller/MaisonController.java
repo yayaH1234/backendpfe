@@ -69,8 +69,8 @@ public class MaisonController {
 
 
 
-          @GetMapping(value="/listm/{nom_mais}")
-        public String getUser(@PathVariable String nom_mais){
+    @GetMapping(value="/listm/{nom_mais}")
+    public String getUser(@PathVariable String nom_mais){
             return  maisonService.findByNom_maisForSend(nom_mais);}
   /*  public Maison getUser(@PathVariable String nom_mais){
         return  maisonService.findByNom_mais(nom_mais);
@@ -78,8 +78,6 @@ public class MaisonController {
   @GetMapping(value="/listmaisJSON/{nom_mais}")
   public Maison getmaisonJSON(@PathVariable String nom_mais){
       return  maisonService.findByNom_mais(nom_mais);}
-
-
 
 
     @GetMapping("/delete/{nom_mais}")
@@ -91,6 +89,12 @@ public class MaisonController {
         String mail=dev[1];
         System.out.println("------> : information delete in controller"+idOrNm+" "+mail);
         maisonService.deleteByNom_mais(idOrNm,mail);
+    }
+    @DeleteMapping("/deleteAllMais")
+    public void deleteAllMs(){
+        System.out.println("------> : getting mail for log");
+        logger.debug("getting mail for log");
+        maisonService.delAllMais();
     }
 
 }
